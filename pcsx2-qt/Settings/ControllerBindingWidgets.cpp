@@ -682,7 +682,7 @@ void ControllerCustomSettingsWidget::createSettingWidgets(const char* translatio
 				ControllerSettingWidgetBinder::BindWidgetToInputProfileString(
 					sif, le, m_config_section, std::move(key_name), si.StringDefaultValue());
 				connect(browse_button, &QPushButton::clicked, [this, le]() {
-					const QString path(QDir::toNativeSeparators(QFileDialog::getOpenFileName(this, tr("Select File"))));
+					const QString path(QDir::toNativeSeparators(QFileDialog::getOpenFileName(this, tr("Select File"), QString(), QString(), (QString *)nullptr, QFileDialog::Option::DontUseNativeDialog)));
 					if (!path.isEmpty())
 						le->setText(path);
 				});

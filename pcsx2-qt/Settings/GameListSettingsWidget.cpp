@@ -181,7 +181,7 @@ void GameListSettingsWidget::onDirectoryListContextMenuRequested(const QPoint& p
 void GameListSettingsWidget::addSearchDirectory(QWidget* parent_widget)
 {
 	QString dir =
-		QDir::toNativeSeparators(QFileDialog::getExistingDirectory(parent_widget, tr("Select Search Directory")));
+		QDir::toNativeSeparators(QFileDialog::getExistingDirectory(parent_widget, tr("Select Search Directory"), QString(), QFileDialog::Option::ShowDirsOnly | QFileDialog::Option::DontUseNativeDialog));
 
 	if (dir.isEmpty())
 		return;
@@ -218,7 +218,7 @@ void GameListSettingsWidget::onRemoveSearchDirectoryButtonClicked()
 void GameListSettingsWidget::onAddExcludedPathButtonClicked()
 {
 	QString path =
-		QDir::toNativeSeparators(QFileDialog::getOpenFileName(QtUtils::GetRootWidget(this), tr("Select Path")));
+		QDir::toNativeSeparators(QFileDialog::getOpenFileName(QtUtils::GetRootWidget(this), tr("Select Path"), QString(), QString(), (QString*)nullptr, QFileDialog::Option::DontUseNativeDialog));
 	if (path.isEmpty())
 		return;
 

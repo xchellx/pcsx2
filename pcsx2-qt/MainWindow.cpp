@@ -528,7 +528,7 @@ void MainWindow::onBlockDumpActionToggled(bool checked)
 
 	// prompt for a location to save
 	const QString new_dir(
-		QFileDialog::getExistingDirectory(this, tr("Select location to save block dump:"), QString::fromStdString(old_directory)));
+		QFileDialog::getExistingDirectory(this, tr("Select location to save block dump:"), QString::fromStdString(old_directory), QFileDialog::Option::ShowDirsOnly | QFileDialog::Option::DontUseNativeDialog));
 	if (new_dir.isEmpty())
 	{
 		// disable it again
@@ -605,7 +605,7 @@ void MainWindow::onToolsVideoCaptureToggled(bool checked)
 	const QString filter(tr("%1 Files (*.%2)").arg(container.toUpper()).arg(container));
 
 	QString path(QStringLiteral("%1.%2").arg(QString::fromStdString(GSGetBaseVideoFilename())).arg(container));
-	path = QFileDialog::getSaveFileName(this, tr("Video Capture"), path, filter);
+	path = QFileDialog::getSaveFileName(this, tr("Video Capture"), path, filter, (QString*)nullptr, QFileDialog::Option::DontUseNativeDialog);
 	if (path.isEmpty())
 		return;
 
@@ -1210,7 +1210,7 @@ void MainWindow::onGameListEntryContextMenuRequested(const QPoint& point)
 void MainWindow::onStartFileActionTriggered()
 {
 	const QString path(
-		QDir::toNativeSeparators(QFileDialog::getOpenFileName(this, tr("Start File"), QString(), tr(OPEN_FILE_FILTER), nullptr)));
+		QDir::toNativeSeparators(QFileDialog::getOpenFileName(this, tr("Start File"), QString(), tr(OPEN_FILE_FILTER), nullptr, QFileDialog::Option::DontUseNativeDialog)));
 	if (path.isEmpty())
 		return;
 
@@ -1236,7 +1236,7 @@ void MainWindow::onChangeDiscFromFileActionTriggered()
 {
 	VMLock lock(pauseAndLockVM());
 	QString filename =
-		QFileDialog::getOpenFileName(lock.getDialogParent(), tr("Select Disc Image"), QString(), tr(DISC_IMAGE_FILTER), nullptr);
+		QFileDialog::getOpenFileName(lock.getDialogParent(), tr("Select Disc Image"), QString(), tr(DISC_IMAGE_FILTER), nullptr, QFileDialog::Option::DontUseNativeDialog);
 	if (filename.isEmpty())
 		return;
 
@@ -1518,6 +1518,7 @@ void MainWindow::onInputRecPlayActionTriggered()
 	dialog.setFileMode(QFileDialog::ExistingFile);
 	dialog.setWindowTitle("Select a File");
 	dialog.setNameFilter(tr("Input Recording Files (*.p2m2)"));
+	dialog.setOption(QFileDialog::Option::DontUseNativeDialog, true);
 	QStringList fileNames;
 	if (dialog.exec())
 	{
@@ -2281,7 +2282,7 @@ void MainWindow::startGameListEntry(const GameList::Entry* entry, std::optional<
 void MainWindow::setGameListEntryCoverImage(const GameList::Entry* entry)
 {
 	const QString filename(
-		QFileDialog::getOpenFileName(this, tr("Select Cover Image"), QString(), tr("All Cover Image Types (*.jpg *.jpeg *.png)")));
+		QFileDialog::getOpenFileName(this, tr("Select Cover Image"), QString(), tr("All Cover Image Types (*.jpg *.jpeg *.png)"), (QString *)nullptr, QFileDialog::Option::DontUseNativeDialog));
 	if (filename.isEmpty())
 		return;
 
@@ -2429,7 +2430,7 @@ void MainWindow::populateLoadStateMenu(QMenu* menu, const QString& filename, con
 
 	QAction* action = menu->addAction(is_right_click_menu ? tr("Load State File...") : tr("Load From File..."));
 	connect(action, &QAction::triggered, [this, filename]() {
-		const QString path(QFileDialog::getOpenFileName(this, tr("Select Save State File"), QString(), tr("Save States (*.p2s)")));
+		const QString path(QFileDialog::getOpenFileName(this, tr("Select Save State File"), QString(), tr("Save States (*.p2s)"), (QString *)nullptr, QFileDialog::Option::DontUseNativeDialog));
 		if (path.isEmpty())
 			return;
 
@@ -2499,7 +2500,7 @@ void MainWindow::populateSaveStateMenu(QMenu* menu, const QString& serial, quint
 		return;
 
 	connect(menu->addAction(tr("Save To File...")), &QAction::triggered, [this]() {
-		const QString path(QFileDialog::getSaveFileName(this, tr("Select Save State File"), QString(), tr("Save States (*.p2s)")));
+		const QString path(QFileDialog::getSaveFileName(this, tr("Select Save State File"), QString(), tr("Save States (*.p2s)"), (QString *)nullptr, QFileDialog::Option::DontUseNativeDialog));
 		if (path.isEmpty())
 			return;
 

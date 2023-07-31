@@ -140,7 +140,7 @@ void GameSummaryWidget::onDiscPathChanged(const QString& value)
 void GameSummaryWidget::onDiscPathBrowseClicked()
 {
 	const QString filename(QFileDialog::getOpenFileName(
-		QtUtils::GetRootWidget(this), tr("Select Disc Path"), QString(), qApp->translate("MainWindow", MainWindow::DISC_IMAGE_FILTER)));
+		QtUtils::GetRootWidget(this), tr("Select Disc Path"), QString(), qApp->translate("MainWindow", MainWindow::DISC_IMAGE_FILTER), (QString *)nullptr, QFileDialog::Option::DontUseNativeDialog));
 	if (filename.isEmpty())
 		return;
 

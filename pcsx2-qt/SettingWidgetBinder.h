@@ -1052,7 +1052,7 @@ namespace SettingWidgetBinder
 			QObject::connect(browse_button, &QAbstractButton::clicked, browse_button, [widget, key]() {
 				const QString path(QDir::toNativeSeparators(QFileDialog::getExistingDirectory(QtUtils::GetRootWidget(widget),
 					//It seems that the latter half should show the types of folders that can be selected within Settings -> Folders, but right now it's broken. It would be best for localization purposes to duplicate this into multiple lines, each per type of folder.
-					qApp->translate("SettingWidgetBinder", "Select folder for %1").arg(QString::fromStdString(key)))));
+					qApp->translate("SettingWidgetBinder", "Select folder for %1").arg(QString::fromStdString(key)), QString(), QFileDialog::Option::ShowDirsOnly | QFileDialog::Option::DontUseNativeDialog)));
 				if (path.isEmpty())
 					return;
 

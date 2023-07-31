@@ -523,7 +523,7 @@ void DEV9SettingsWidget::onEthHostExport()
 
 	QString path =
 		QDir::toNativeSeparators(QFileDialog::getSaveFileName(QtUtils::GetRootWidget(this), tr("Hosts File"),
-			"hosts.ini", tr("ini (*.ini)"), nullptr));
+			"hosts.ini", tr("ini (*.ini)"), nullptr, QFileDialog::Option::DontUseNativeDialog));
 
 	if (path.isEmpty())
 		return;
@@ -557,7 +557,7 @@ void DEV9SettingsWidget::onEthHostImport()
 
 	QString path =
 		QDir::toNativeSeparators(QFileDialog::getOpenFileName(QtUtils::GetRootWidget(this), tr("Hosts File"),
-			"hosts.ini", tr("ini (*.ini)"), nullptr));
+			"hosts.ini", tr("ini (*.ini)"), nullptr, QFileDialog::Option::DontUseNativeDialog));
 
 	if (path.isEmpty())
 		return;
@@ -713,7 +713,7 @@ void DEV9SettingsWidget::onHddBrowseFileClicked()
 	QString path =
 		QDir::toNativeSeparators(QFileDialog::getSaveFileName(QtUtils::GetRootWidget(this), tr("HDD Image File"),
 			!m_ui.hddFile->text().isEmpty() ? m_ui.hddFile->text() : (!m_ui.hddFile->placeholderText().isEmpty() ? m_ui.hddFile->placeholderText() : "DEV9hdd.raw"),
-			tr("HDD (*.raw)"), nullptr, QFileDialog::DontConfirmOverwrite));
+			tr("HDD (*.raw)"), nullptr, QFileDialog::DontConfirmOverwrite | QFileDialog::Option::DontUseNativeDialog));
 
 	if (path.isEmpty())
 		return;
